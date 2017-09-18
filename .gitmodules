@@ -1,12 +1,6 @@
 [submodule "alsa-lib"]
 	path = externals/alsa-lib
 	url = http://git.alsa-project.org/http/alsa-lib.git
-[submodule "externals/tools"]
-	path = externals/tools
-	url = https://github.com/raspberrypi/tools.git
-[submodule "externals/libserial"]
-	path = externals/libserial
-	url = https://github.com/Derecho/libserial.git
-[submodule "externals/libusb"]
-	path = externals/libusb
-	url = https://github.com/libusb/libusb.git
+[submodule "externals/rtmidi"]
+	path = externals/rtmidi
+	url = https://github.com/thestk/rtmidi.git
