@@ -7,7 +7,9 @@
 class IMidiSource {
 public:
     virtual ~IMIDISOURCE(){};
-    virtual void run() = 0;
+    virtual bool init();
+    virtual bool open();
+    virtual bool close();
     virtual Notes& getNotes() = 0;
 };
 
