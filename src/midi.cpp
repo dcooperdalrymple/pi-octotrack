@@ -2,7 +2,11 @@
 #include <cstdlib>
 #include "midi.h"
 
-Midi::Midi() {
+Midi::Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel) :
+    midi_in_port(_midi_in_port),
+    midi_out_port(_midi_out_port),
+    midi_in_channel(_midi_in_channel),
+    midi_out_channel(_midi_out_channel) {
     // Initialize RtMidi
     try {
         midiin = new RtMidiIn();

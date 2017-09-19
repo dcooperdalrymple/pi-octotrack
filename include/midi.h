@@ -8,7 +8,7 @@
 
 class Midi : IMidiSource {
 public:
-    Midi();
+    Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel);
     ~Midi();
     bool init();
     bool open();
@@ -19,13 +19,22 @@ protected:
     void midiCallback(double deltatime, std::vector<uint8_t> *message, void *userData);
 
 private:
+    // Private Functions
     bool sendMessage();
     bool parseMessage();
     void clean();
 
+    // Config Variables
+    uint16_t midi_in_port;
+    uint16_t midi_out_port;
+    uint16_t midi_in_channel;
+    uint16_t midi_out_channel;
+
+    // Device Classes
     RtMidiIn *midiin = 0;
     RtMidiOut *midiout = 0;
 
+    // Private Variables
     Notes notes;
     MidiStatus status;
     std::vector<uint8_t> message; // Output message stream

@@ -4,13 +4,17 @@
 #include "debugobserver.h"
 #include "player.h"
 #include "projects.h"
+#include "config.h"
 #include "log.h"
 
 int main(int argc, char *argv[]) {
     LOG("Pi OctoTrack starting...");
 
+    LOG("Reading Configuration File at " << CONFIG_FILE);
+    Config config(CONFIG_FILE);
+
     LOG("Initializing Midi");
-    PMidiSource midi();
+    PMidiSource midi(config.Value("midi", MIDI_IN_PORT), config.Value("midi", MIDI_OUT_PORT), config.Value("midi", MIDI_IN_CHANNEL), config.Value("midi", MIDI_OUT_CHANNEL));
     if (midi->init() == false) {
         LOG("Midi initialization failure");
         return 0;
