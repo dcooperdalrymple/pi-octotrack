@@ -7,6 +7,9 @@
 #define DEBUG
 #define CONFIG_FILE "/root/octotrack/config.txt"
 
+// Project Settings
+#define PROJECT_DIRECTORY "/root/tracks"
+
 // Midi Settings
 #define MIDI_IN_PORT 0
 #define MIDI_OUT_PORT 0
@@ -15,11 +18,11 @@
 #define MIDI_OUT_CHANNEL MIDI_CHANNEL
 
 // Audio Settings
-#define SAMPLE_RATE 48000
-#define CHANNELS 8
-#define PERIOD_SIZE 128
-#define BUFFER_SIZE (PERIOD_SIZE * 8)
-typedef uint16_t sample_t;
+#define AUDIO_DEVICE_NAME "hw:1"
+#define AUDIO_SAMPLE_RATE 48000
+#define AUDIO_CHANNELS 8
+#define AUDIO_PERIOD_SIZE 128
+typedef int16_t sample_t;
 
 #include <string>
 #include <map>

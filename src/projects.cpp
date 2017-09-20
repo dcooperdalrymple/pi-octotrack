@@ -7,7 +7,7 @@
 #include "projects.h"
 #include "log.h"
 
-Projects::Projects() {
+Projects::Projects(const char *directoryName) : directoryName(directoryName) {
 
 }
 

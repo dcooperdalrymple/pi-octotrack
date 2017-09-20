@@ -2,11 +2,10 @@
 #define MIDI_H
 
 #include <cstdlib>
-#include "imidisource.h"
 #include "notes.h"
 #include "midistatus.h"
 
-class Midi : IMidiSource {
+class Midi {
 public:
     Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel);
     ~Midi();

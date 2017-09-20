@@ -18,6 +18,7 @@ private:
     void parseFilename(string filename, string &filename_name, string &filename_extension);
     void empty();
 
+    const char *directoryName;
     DIR *directory;
     dirent entry;
     std::vector<Project> projects;
