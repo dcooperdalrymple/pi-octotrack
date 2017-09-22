@@ -1,18 +1,19 @@
 #ifndef NOTE_H
 #define NOTE_H
 
-#include <cstdint>
+#include <stdint.h>
+using namespace std;
 
 class Note {
 public:
-    Note(std::uint8_t pitch, std::uint8_t velocity);
+    Note(uint8_t pitch, uint8_t velocity);
     ~Note();
-    std::uint8_t getPitch() const;
-    std::uint8_t getVelocity() const;
+    uint8_t getPitch() const;
+    uint8_t getVelocity() const;
 
 private:
-    std::uint8_t pitch;
-    std::uint8_t velocity;
+    uint8_t pitch;
+    uint8_t velocity;
 };
 
 #endif
