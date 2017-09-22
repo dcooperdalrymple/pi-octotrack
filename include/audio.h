@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <cstding>
+#include <cstdint>
 #include <alsa/asoundlib.h>
 
 struct AudioCallbackData {
