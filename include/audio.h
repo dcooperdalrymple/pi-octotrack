@@ -22,17 +22,17 @@ public:
 protected:
     AlsaCallback(snd_async_handler_t *pcmCallback);
     sample_t *buffer;
-    std:size_t bufferSize;
+    std::size_t bufferSize;
     snd_async_handler_t *pcmCallback;
 
 private:
     std::string deviceName;
-    uint32_t sampleRate;
-    uint8_t channels;
-    uint16_t periodSize;
-    uint16_t bufferSize;
+    std::uint32_t sampleRate;
+    std::uint8_t channels;
+    std::uint16_t periodSize;
+    std::uint16_t bufferSize;
 
-    int32_t error;
+    std::int32_t error;
     snd_pcm_t *handle;
     AudioCallbackData *callbackData;
 };

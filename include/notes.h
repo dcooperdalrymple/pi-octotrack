@@ -2,7 +2,7 @@
 #define NOTES_H
 
 #include <vector>
-#include <cstdint>
+#include <stdint>
 #include "note.h"
 #include "inoteobservable.h"
 #include "inoteobserver.h"

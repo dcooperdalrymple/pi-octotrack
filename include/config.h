@@ -22,10 +22,12 @@
 #define AUDIO_SAMPLE_RATE 48000
 #define AUDIO_CHANNELS 8
 #define AUDIO_PERIOD_SIZE 128
-typedef int16_t sample_t;
 
 #include <string>
+#include <stdint>
 #include <map>
+
+typedef int16_t sample_t;
 
 class Config {
 public:

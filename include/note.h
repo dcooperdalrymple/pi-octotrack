@@ -1,7 +1,7 @@
 #ifndef NOTE_H
 #define NOTE_H
 
-#include <cstdint>
+#include <stdint>
 
 class Note {
 public:

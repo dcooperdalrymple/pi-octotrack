@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 #include <sndfile.h>
 #include "project.h"
 #include "log.h"

@@ -2,6 +2,7 @@
 #define MIDI_H
 
 #include <cstdlib>
+#include <stdint>
 #include "notes.h"
 #include "midistatus.h"
 

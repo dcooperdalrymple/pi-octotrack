@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <stdio.h>
+#include <cstdio>
 #include <dirent.h>
 #include "projects.h"
 #include "log.h"

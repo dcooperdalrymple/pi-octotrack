@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 #include "audio.h"
 #include "log.h"
 

@@ -2,7 +2,7 @@
 #define PROJECT_H
 
 #include <vector>
-#include <cstdint>
+#include <stdint>
 #include <sndfile.h>
 
 class Project {

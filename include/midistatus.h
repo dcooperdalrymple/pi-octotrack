@@ -1,7 +1,7 @@
 #ifndef MIDISTATUS_H
 #define MIDISTATUS_H
 
-#include <cstdint>
+#include <stdint>
 
 enum MidiStatus : uint8_t {
     None = 0,
