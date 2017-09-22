@@ -16,8 +16,8 @@ Projects::~Projects() {
 }
 
 bool Projects::search_directory() {
-    int result;
-    extern int errno;
+    std::int16_t result;
+    extern std::int16_t errno;
     stat sb;
     const char *directory_name = "/root/tracks";
 
@@ -41,9 +41,9 @@ bool Projects::search_directory() {
                 LOG("File found: " << entry->d_name);
 
                 // Getting separate filename and extension:
-                string filename;
-                string filename_name;
-                string filename_extension;
+                std::string filename;
+                std::string filename_name;
+                std::string filename_extension;
                 filename = entry->d_name;
 
                 parseFilename(filename, &filename_name, &filename_extension);
@@ -66,7 +66,7 @@ bool Projects::search_directory() {
     return true;
 }
 
-bool Projects::addProject(string filename) {
+bool Projects::addProject(std::string filename) {
     Project project(filename.c_str());
     if (project->isValid()) {
         projects.push_back(project);
@@ -84,7 +84,7 @@ const std::vector<Project> Projects::getProjects() const {
     return projects;
 }
 
-void Projects::parseFilename(string filename, string &filename_name, string &filename_extension) {
+void Projects::parseFilename(std::string filename, std::string &filename_name, std::string &filename_extension) {
     size_t dot = filename.find_last_of(".");
     if (dot != std::string::npos) {
         filename_name = filename.substr(0, dot);

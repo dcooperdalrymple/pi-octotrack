@@ -9,7 +9,7 @@ Notes::~Notes() {
 
 }
 
-void Notes::addNote(uint8_t pitch, uint8_t velocity) {
+void Notes::addNote(std::uint8_t pitch, std::uint8_t velocity) {
     bool present = false;
     for (auto &note : notes) {
         if (not.getPitch() == pitch) {
@@ -29,7 +29,7 @@ void Notes::addNote(uint8_t pitch, uint8_t velocity) {
     }
 }
 
-void Notes::removeNote(uint8_t pitch) {
+void Notes::removeNote(std::uint8_t pitch) {
     // As we're providing a lambda to filter out which Note objects should be
     // removed, we can do the observer notification here as well to avoid
     // looping over the notes twice.

@@ -24,10 +24,10 @@
 #define AUDIO_PERIOD_SIZE 128
 
 #include <string>
-#include <stdint>
+#include <cstdint>
 #include <map>
 
-typedef int16_t sample_t;
+typedef std::int16_t sample_t;
 
 class Config {
 public:
@@ -35,7 +35,7 @@ public:
 
     CHameleon const& Value(std::string const& section, std::string const& entry) const;
 
-    Chameleon const& Value(std::string const& section, std::string const& entry, uint32_t value);
+    Chameleon const& Value(std::string const& section, std::string const& entry, std::uint32_t value);
     Chameleon const& Value(std::string const& section, std::string const& entry, std::string const& value);
 
 private:

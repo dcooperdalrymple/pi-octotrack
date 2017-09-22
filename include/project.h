@@ -1,8 +1,9 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
+#include <string>
 #include <vector>
-#include <stdint>
+#include <cstdint>
 #include <sndfile.h>
 
 class Project {
@@ -11,8 +12,8 @@ public:
     ~Project();
     bool isValid();
     bool updateBuffer();
-    string getName();
-    uint8_t getTrigger();
+    std::string getName();
+    std::uint8_t getTrigger();
 
 protected:
     Sample *buffer;
@@ -21,11 +22,11 @@ protected:
 private:
     SF_INFO sfinfo;
     SNDFILE *file = nullptr;
-    uint32_t readcount;
+    std::uint32_t readcount;
 
     bool valid;
-    string name;
-    uint8_t trigger;
+    std::string name;
+    std::uint8_t trigger;
 };
 
 #endif

@@ -40,10 +40,10 @@ bool Project::updateBuffer() {
     return (readcount = sf_readf_int(infile, buffer, PERIOD_SIZE)) > 0;
 }
 
-string Project::getName() {
+std::string Project::getName() {
     return name;
 }
 
-uint8_t Project::getTrigger() {
+std::uint8_t Project::getTrigger() {
     return trigger;
 }

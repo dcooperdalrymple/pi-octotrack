@@ -1,8 +1,8 @@
 #ifndef PROJECTS_H
 #define PROJECTS_H
 
+#include <string>
 #include <vector>
-#include <stdint>
 #include "project.h"
 
 class Projects {
@@ -10,12 +10,12 @@ public:
     Projects();
     ~Projects();
     bool searchDirectory();
-    void addProject(string filename);
+    void addProject(std::string filename);
     bool Projects::removeProject(Project &project);
     std::vector<Project> Projects::getProjects();
 
 private:
-    void parseFilename(string filename, string &filename_name, string &filename_extension);
+    void parseFilename(std::string filename, std::string &filename_name, std::string &filename_extension);
     void empty();
 
     const char *directoryName;

@@ -2,13 +2,13 @@
 #define MIDI_H
 
 #include <cstdlib>
-#include <stdint>
+#include <cstdint>
 #include "notes.h"
 #include "midistatus.h"
 
 class Midi {
 public:
-    Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel);
+    Midi(std::uint16_t _midi_in_port, std::uint16_t _midi_out_port, std::uint16_t _midi_in_channel, std::uint16_t _midi_out_channel);
     ~Midi();
     bool init();
     bool open();
@@ -25,10 +25,10 @@ private:
     void clean();
 
     // Config Variables
-    uint16_t midi_in_port;
-    uint16_t midi_out_port;
-    uint16_t midi_in_channel;
-    uint16_t midi_out_channel;
+    std::uint16_t midi_in_port;
+    std::uint16_t midi_out_port;
+    std::uint16_t midi_in_channel;
+    std::uint16_t midi_out_channel;
 
     // Device Classes
     RtMidiIn *midiin = 0;
@@ -37,8 +37,8 @@ private:
     // Private Variables
     Notes notes;
     MidiStatus status;
-    std::vector<uint8_t> message; // Output message stream
-    uint8_t data[2]; // Midi channel messages have 2 data bytes at most
+    std::vector<std::uint8_t> message; // Output message stream
+    std::uint8_t data[2]; // Midi channel messages have 2 data bytes at most
 };
 
 #endif

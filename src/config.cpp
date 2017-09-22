@@ -27,7 +27,7 @@ Config::Config(std::string const& configFile) {
     std::string name;
     std::string value;
     std::string inSection;
-    uint16_t posEqual;
+    std::uint16_t posEqual;
 
     while (std::getline(file, line)) {
         if (!line.length()) { continue; }

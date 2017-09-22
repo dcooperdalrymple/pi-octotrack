@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "midi.h"
 
-Midi::Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel) :
+Midi::Midi(std::uint16_t _midi_in_port, std::uint16_t _midi_out_port, std::uint16_t _midi_in_channel, std::uint16_t _midi_out_channel) :
     midi_in_port(_midi_in_port),
     midi_out_port(_midi_out_port),
     midi_in_channel(_midi_in_channel),
@@ -22,8 +22,8 @@ Midi::~Midi() {
 }
 
 bool Midi::init() {
-    uint8_t nPorts = 0;
-    uint8_t i = 0;
+    std::uint8_t nPorts = 0;
+    std::uint8_t i = 0;
     std::string portName;
 
     // Check Input Ports
@@ -83,11 +83,11 @@ Notes& Midi::getNotes() {
     return notes;
 }
 
-void midiCallback(double deltatime, std::vector<uint8_t> *message, void *userData) {
+void midiCallback(double deltatime, std::vector<std::uint8_t> *message, void *userData) {
     if (message->size() <= 0) return;
 
-    uint8_t bytesLeft = 0;
-    uint8_t c = (uint8_t)message->at(0);
+    std::uint8_t bytesLeft = 0;
+    std::uint8_t c = (std::uint8_t)message->at(0);
 
     // TODO: Needs more work here
 
@@ -95,17 +95,17 @@ void midiCallback(double deltatime, std::vector<uint8_t> *message, void *userDat
         // Data received, reuse last status
         data[0] = c;
         if (!(status == MidiStatus::ProgramChange) && !(status == MidiStatus::ChannelPressure)) {
-            data[1] = (uint8_t)message->at(1);
+            data[1] = (std::uint8_t)message->at(1);
         }
     } else if ((c > 0x7F) && (c < 0xF0)) {
         // Status byte of channel message
         if ((c & 0x0F) == MIDI_IN_CHANNEL) { // Ignore if not channel
             status = MidiStatus((c & 0xF0));
             if ((status == MidiStatus::ProgramChange) || (status == MidiStatus::ChannelPressure)) {
-                data[0] = (uint8_t)message->at(1);
+                data[0] = (std::uint8_t)message->at(1);
             } else {
-                data[0] = (uint8_t)message->at(1);
-                data[1] = (uint8_t)message->at(2);
+                data[0] = (std::uint8_t)message->at(1);
+                data[1] = (std::uint8_t)message->at(2);
             }
         }
     }

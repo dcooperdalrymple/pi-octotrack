@@ -2,7 +2,7 @@
 #include "audio.h"
 #include "log.h"
 
-Audio::Audio(std::string deviceName, uint32_t sampleRate, uint8_t channels, uint16_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
+Audio::Audio(std::string deviceName, std::uint32_t sampleRate, std::uint8_t channels, std::uint16_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
     bufferSize = periodSize * sizeof(sample_t);
     handle = nullptr;
     pcmCallback = nullptr;
@@ -86,15 +86,16 @@ bool Audio::open() {
     sample_t *buffer = (sample_t *)malloc(channels * periodSize * sizeof(sample_t));
 
     // Simple square wave [test]
-    for (uint32_t = 0; i < periodSize; i++) {
+    std::uint16_t i = 0;
+    for (i = 0; i < periodSize; i++) {
         buffer[i] = 0x7FFF;
     }
-    for (uint32_t i = periodSize; i < 2 * periodSize; i++) {
+    for (i = periodSize; i < 2 * periodSize; i++) {
         buffer[i] = 0x0000;
     }
 
     // Write initial chunk (twice the periodSize)
-    for (uint8_t i = 0; i < 2; i++) {
+    for (i = 0; i < 2; i++) {
         error = snd_pcm_mmap_writei(handle, &buffer, periodSize);
         if (error > 0) {
             LOG("snd_pcm_mmap_writei: " << error << " frames written");
