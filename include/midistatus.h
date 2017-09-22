@@ -1,9 +1,10 @@
 #ifndef MIDISTATUS_H
 #define MIDISTATUS_H
 
-#include <cstdint>
+#include <stdint.h>
+using namespace std;
 
-enum MidiStatus : std::uint8_t {
+enum MidiStatus : uint8_t {
     None = 0,
     NoteOff = 0x80,
     NoteOn = 0x90,

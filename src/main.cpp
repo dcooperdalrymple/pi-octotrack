@@ -6,13 +6,14 @@
 #include "projects.h"
 #include "config.h"
 #include "log.h"
+using namespace std;
 
 int main(int argc, char *argv[]) {
     LOG("Pi OctoTrack starting...");
 
-    std::string configFile = CONFIG_FILE;
+    string configFile = CONFIG_FILE;
     if (argc == 2) {
-        configFile = std::string(argv[1]);
+        configFile = string(argv[1]);
     }
 
     // Begin Configuration

@@ -1,8 +1,9 @@
-#include <cstdio>
+#include <stdio.h>
 #include "audio.h"
 #include "log.h"
+using namespace std;
 
-Audio::Audio(std::string deviceName, std::uint32_t sampleRate, std::uint8_t channels, std::uint16_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
+Audio::Audio(string deviceName, uint32_t sampleRate, uint8_t channels, uint16_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
     bufferSize = periodSize * sizeof(sample_t);
     handle = nullptr;
     pcmCallback = nullptr;
@@ -86,7 +87,7 @@ bool Audio::open() {
     sample_t *buffer = (sample_t *)malloc(channels * periodSize * sizeof(sample_t));
 
     // Simple square wave [test]
-    std::uint16_t i = 0;
+    uint16_t i = 0;
     for (i = 0; i < periodSize; i++) {
         buffer[i] = 0x7FFF;
     }

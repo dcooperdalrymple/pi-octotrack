@@ -2,24 +2,25 @@
 #define NOTES_H
 
 #include <vector>
-#include <cstdint>
+#include <stdint.h>
 #include "note.h"
 #include "inoteobservable.h"
 #include "inoteobserver.h"
+using namespace std;
 
 class Notes : public INoteObservable {
 public:
     Notes();
     ~Notes();
-    void addNote(std::uint8_t pitch, std::uint8_t velocity);
-    void removeNote(std::uint8_t pitch);
-    const std::vector<Note> getNotes() const;
+    void addNote(uint8_t pitch, uint8_t velocity);
+    void removeNote(uint8_t pitch);
+    const vector<Note> getNotes() const;
     void registerObserver(PNoteObserver &observer);
     void removeObserver(PNoteObserver &observer);
 
 private:
-    std::vector<Note> notes;
-    std::vector<PNoteObserver> observers;
+    vector<Note> notes;
+    vector<PNoteObserver> observers;
 };
 
 #endif

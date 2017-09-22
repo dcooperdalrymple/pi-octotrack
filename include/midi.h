@@ -2,13 +2,14 @@
 #define MIDI_H
 
 #include <cstdlib>
-#include <cstdint>
+#include <stdint.h>
 #include "notes.h"
 #include "midistatus.h"
+using namespace std;
 
 class Midi {
 public:
-    Midi(std::uint16_t _midi_in_port, std::uint16_t _midi_out_port, std::uint16_t _midi_in_channel, std::uint16_t _midi_out_channel);
+    Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel);
     ~Midi();
     bool init();
     bool open();
@@ -16,7 +17,7 @@ public:
     Notes& getNotes();
 
 protected:
-    void midiCallback(double deltatime, std::vector<uint8_t> *message, void *userData);
+    void midiCallback(double deltatime, vector<uint8_t> *message, void *userData);
 
 private:
     // Private Functions
@@ -25,10 +26,10 @@ private:
     void clean();
 
     // Config Variables
-    std::uint16_t midi_in_port;
-    std::uint16_t midi_out_port;
-    std::uint16_t midi_in_channel;
-    std::uint16_t midi_out_channel;
+    uint16_t midi_in_port;
+    uint16_t midi_out_port;
+    uint16_t midi_in_channel;
+    uint16_t midi_out_channel;
 
     // Device Classes
     RtMidiIn *midiin = 0;
@@ -37,8 +38,8 @@ private:
     // Private Variables
     Notes notes;
     MidiStatus status;
-    std::vector<std::uint8_t> message; // Output message stream
-    std::uint8_t data[2]; // Midi channel messages have 2 data bytes at most
+    vector<uint8_t> message; // Output message stream
+    uint8_t data[2]; // Midi channel messages have 2 data bytes at most
 };
 
 #endif

@@ -3,8 +3,9 @@
 
 #include <string>
 #include <vector>
-#include <cstdint>
+#include <stdint.h>
 #include <sndfile.h>
+using namespace std;
 
 class Project {
 public:
@@ -12,21 +13,21 @@ public:
     ~Project();
     bool isValid();
     bool updateBuffer();
-    std::string getName();
-    std::uint8_t getTrigger();
+    string getName();
+    uint8_t getTrigger();
 
 protected:
     Sample *buffer;
-    std::size_t bufferSize;
+    size_t bufferSize;
 
 private:
     SF_INFO sfinfo;
     SNDFILE *file = nullptr;
-    std::uint32_t readcount;
+    uint32_t readcount;
 
     bool valid;
-    std::string name;
-    std::uint8_t trigger;
+    string name;
+    uint8_t trigger;
 };
 
 #endif

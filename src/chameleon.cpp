@@ -26,21 +26,20 @@
 
 #include <string>
 #include <sstream>
-
+#include <iostream>
 #include "Chameleon.h"
+using namespace std;
 
-Chameleon::Chameleon(std::string const& value) {
+Chameleon::Chameleon(string const& value) {
     value_ = value;
 }
-
-#include <iostream>
 
 Chameleon::Chameleon(const char* c) {
     value_ = c;
 }
 
 Chameleon::Chameleon(double d) {
-    std::stringstream s;
+    stringstream s;
     s << d;
     value_ = s.str();
 }
@@ -55,18 +54,18 @@ Chameleon& Chameleon::operator=(Chameleon const& other) {
 }
 
 Chameleon& Chameleon::operator=(double i) {
-    std::stringstream s;
+    stringstream s;
     s << i;
     value_ = s.str();
     return *this;
 }
 
-Chameleon& Chameleon::operator=(std::string const& s) {
+Chameleon& Chameleon::operator=(string const& s) {
     value_ = s;
     return *this;
 }
 
-Chameleon::operator std::string() const {
+Chameleon::operator string() const {
     return value_;
 }
 

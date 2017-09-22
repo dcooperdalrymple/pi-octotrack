@@ -4,7 +4,7 @@
 #include "inoteobserver.h"
 #include "note.h"
 
-class DebugObserver : public inoteobserver {
+class DebugObserver : public INoteObserver {
 public:
     DebugObserver();
     ~DebugObserver();

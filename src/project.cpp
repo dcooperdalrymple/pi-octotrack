@@ -1,7 +1,9 @@
-#include <cstdio>
+#include <stdio.h>
 #include <sndfile.h>
 #include "project.h"
+#include "config.h"
 #include "log.h"
+using namespace std;
 
 Project::Project(const char *filename) {
     infile = sf_open(infilename, SFM_READ, &sfinfo);
@@ -44,6 +46,6 @@ std::string Project::getName() {
     return name;
 }
 
-std::uint8_t Project::getTrigger() {
+uint8_t Project::getTrigger() {
     return trigger;
 }

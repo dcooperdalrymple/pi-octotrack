@@ -6,6 +6,7 @@
 #include <dirent.h>
 #include "projects.h"
 #include "log.h"
+using namespace std;
 
 Projects::Projects(const char *directoryName) : directoryName(directoryName) {
 
@@ -16,8 +17,8 @@ Projects::~Projects() {
 }
 
 bool Projects::search_directory() {
-    std::int16_t result;
-    extern std::int16_t errno;
+    int16_t result;
+    extern int16_t errno;
     stat sb;
     const char *directory_name = "/root/tracks";
 
@@ -41,9 +42,9 @@ bool Projects::search_directory() {
                 LOG("File found: " << entry->d_name);
 
                 // Getting separate filename and extension:
-                std::string filename;
-                std::string filename_name;
-                std::string filename_extension;
+                string filename;
+                string filename_name;
+                string filename_extension;
                 filename = entry->d_name;
 
                 parseFilename(filename, &filename_name, &filename_extension);
@@ -66,7 +67,7 @@ bool Projects::search_directory() {
     return true;
 }
 
-bool Projects::addProject(std::string filename) {
+bool Projects::addProject(string filename) {
     Project project(filename.c_str());
     if (project->isValid()) {
         projects.push_back(project);
@@ -77,16 +78,16 @@ bool Projects::addProject(std::string filename) {
 }
 
 bool Projects::removeProject(Project &project) {
-    projects.erase(std::remove(projects.begin(), projects.end(), projects), projects.end());
+    projects.erase(remove(projects.begin(), projects.end(), projects), projects.end());
 }
 
-const std::vector<Project> Projects::getProjects() const {
+const vector<Project> Projects::getProjects() const {
     return projects;
 }
 
-void Projects::parseFilename(std::string filename, std::string &filename_name, std::string &filename_extension) {
+void Projects::parseFilename(string filename, string &filename_name, string &filename_extension) {
     size_t dot = filename.find_last_of(".");
-    if (dot != std::string::npos) {
+    if (dot != string::npos) {
         filename_name = filename.substr(0, dot);
         filename_extension = filename.substr(dot, filename.size() - dot);
     } else {

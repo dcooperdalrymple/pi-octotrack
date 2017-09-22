@@ -3,9 +3,10 @@
 
 #include <memory>
 #include "note.h"
+using namespace std;
 
 class INoteObservable;
-using PNoteObservable = std::shared_ptr<INoteObservable>;
+using PNoteObservable = shared_ptr<INoteObservable>;
 
 class INoteObserver {
 public:
@@ -15,6 +16,6 @@ public:
     virtual void notify(const PNoteObservable &&subject) = 0;
 };
 
-using PNoteObserver = std::shared_ptr<INoteObserver>;
+using PNoteObserver = shared_ptr<INoteObserver>;
 
 #endif;

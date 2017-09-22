@@ -4,8 +4,9 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <cstdint>
+#include <stdint.h>
 #include <alsa/asoundlib.h>
+using namespace std;
 
 struct AudioCallbackData {
     sample_t *buffer;
@@ -22,17 +23,17 @@ public:
 protected:
     AlsaCallback(snd_async_handler_t *pcmCallback);
     sample_t *buffer;
-    std::size_t bufferSize;
+    size_t bufferSize;
     snd_async_handler_t *pcmCallback;
 
 private:
-    std::string deviceName;
-    std::uint32_t sampleRate;
-    std::uint8_t channels;
-    std::uint16_t periodSize;
-    std::uint16_t bufferSize;
+    string deviceName;
+    uint32_t sampleRate;
+    uint8_t channels;
+    uint16_t periodSize;
+    uint16_t bufferSize;
 
-    std::int32_t error;
+    int32_t error;
     snd_pcm_t *handle;
     AudioCallbackData *callbackData;
 };
