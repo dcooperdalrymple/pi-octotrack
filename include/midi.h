@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <stdint.h>
+#include "RtMidi.h"
 #include "notes.h"
 #include "midistatus.h"
 using namespace std;

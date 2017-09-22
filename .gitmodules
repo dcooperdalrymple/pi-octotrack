@@ -1,6 +1,0 @@
-[submodule "alsa-lib"]
-	path = externals/alsa-lib
-	url = http://git.alsa-project.org/http/alsa-lib.git
-[submodule "externals/rtmidi"]
-	path = externals/rtmidi
-	url = https://github.com/thestk/rtmidi.git

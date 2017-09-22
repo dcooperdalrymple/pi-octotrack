@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include "RtMidi.h"
 #include "midi.h"
 using namespace std;
 

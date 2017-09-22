@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "RtMidi.h"
+#include "midi.h"
 #include "debugobserver.h"
 #include "player.h"
 #include "projects.h"
