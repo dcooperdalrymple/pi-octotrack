@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <stdint.h>
+using namespace std;
+
 #include "note.h"
 #include "inoteobservable.h"
 #include "inoteobserver.h"
-using namespace std;
 
 class Notes : public INoteObservable {
 public:

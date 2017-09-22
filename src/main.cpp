@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
+using namespace std;
+
 #include "config.h"
 #include "midi.h"
 #include "projects.h"
 #include "audio.h"
 #include "debugobserver.h"
 #include "log.h"
-using namespace std;
 
 int main(int argc, char *argv[]) {
     LOG("Pi OctoTrack starting...");
@@ -34,18 +35,18 @@ int main(int argc, char *argv[]) {
 #endif
     midi.open();
 
-    // Populate Projects
-    Projects projects(config.Value("project", "directory", PROJECT_DIRECTORY).c_str());
-    if (projects.search_directory() == false) {
-        LOG("Failed to read projecs directory");
-        return 0;
-    }
-
     // Setup Audio
     LOG("Initializing Audio");
     Audio audio(config.Value("audio", "device_name", AUDIO_DEVICE_NAME), config.Value("audio", "sample_rate", AUDIO_SAMPLE_RATE), config.Value("audio", "channels", AUDIO_CHANNELS), config.Value("audio", "period_size", AUDIO_PERIOD_SIZE));
     if (audio.open() == false) {
         LOG("Audio initialization failure");
+        return 0;
+    }
+
+    // Populate Projects
+    Projects projects(config.Value("project", "directory", PROJECT_DIRECTORY).c_str(), &audio);
+    if (projects.searchDirectory() == false) {
+        LOG("Failed to read projecs directory");
         return 0;
     }
 

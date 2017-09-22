@@ -3,34 +3,43 @@
 
 #include <cstdlib>
 #include <stdint.h>
-#include "RtMidi.h"
+#include <rtmidi/RtMidi.h>
+using namespace std;
+
 #include "notes.h"
 #include "midistatus.h"
-using namespace std;
 
 class Midi {
 public:
-    Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel);
+    Midi(uint16_t in_port, uint16_t out_port, uint16_t in_channel, uint16_t out_channel);
     ~Midi();
+
+    // Public Functions
     bool init();
     bool open();
     bool close();
     Notes& getNotes();
 
+    // Config Variables
+    uint16_t in_port;
+    uint16_t out_port;
+    uint16_t in_channel;
+    uint16_t out_channel;
+
+    // Public Data Variables
+    bool parseMessage();
+    // NOTE: These should be private, but the static callback needs them. Maybe public access function should be built instead?
+    vector<uint8_t> message; // Output message stream
+    uint8_t data[2]; // Midi channel messages have 2 data bytes at most
+    MidiStatus status;
+
 protected:
-    void midiCallback(double deltatime, vector<uint8_t> *message, void *userData);
+    static void midiCallback(double deltatime, vector<uint8_t> *message, void *userData);
 
 private:
     // Private Functions
     bool sendMessage();
-    bool parseMessage();
     void clean();
-
-    // Config Variables
-    uint16_t midi_in_port;
-    uint16_t midi_out_port;
-    uint16_t midi_in_channel;
-    uint16_t midi_out_channel;
 
     // Device Classes
     RtMidiIn *midiin = 0;
@@ -38,9 +47,6 @@ private:
 
     // Private Variables
     Notes notes;
-    MidiStatus status;
-    vector<uint8_t> message; // Output message stream
-    uint8_t data[2]; // Midi channel messages have 2 data bytes at most
 };
 
 #endif

@@ -48,6 +48,8 @@ public:
     operator string() const;
     operator int32_t() const;
 
+    const char* c_str() const;
+
 private:
     string value_;
 };

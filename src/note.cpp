@@ -1,6 +1,7 @@
 #include <stdint.h>
-#include "note.h"
 using namespace std;
+
+#include "note.h"
 
 Note::Note(uint8_t pitch, uint8_t velocity) :
     pitch(pitch),

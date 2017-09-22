@@ -1,7 +1,8 @@
 #include <stdio.h>
+using namespace std;
+
 #include "audio.h"
 #include "log.h"
-using namespace std;
 
 Audio::Audio(string deviceName, uint32_t sampleRate, uint8_t channels, uint16_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
     bufferSize = periodSize * sizeof(sample_t);

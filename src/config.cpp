@@ -1,8 +1,9 @@
 // http://www.adp-gmbh.ch/cpp/config_file.html
 
 #include <fstream>
-#include "config.h"
 using namespace std;
+
+#include "config.h"
 
 string trim(string const& source, char const* delims = " \t\r\n") {
     string result(source);

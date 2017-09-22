@@ -1,7 +1,8 @@
 #include <algorithm>
 #include <stdint.h>
-#include "notes.h"
 using namespace std;
+
+#include "notes.h"
 
 Notes::Notes() {
 
@@ -14,7 +15,7 @@ Notes::~Notes() {
 void Notes::addNote(uint8_t pitch, uint8_t velocity) {
     bool present = false;
     for (auto &note : notes) {
-        if (not.getPitch() == pitch) {
+        if (note.getPitch() == pitch) {
             present = true;
             break;
         }

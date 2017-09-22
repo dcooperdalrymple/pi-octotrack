@@ -26,10 +26,11 @@
 #include <string>
 #include <stdint.h>
 #include <map>
-#include "chameleon.h"
 using namespace std;
 
-typedef int16_t sample_t;
+#include "chameleon.h"
+
+typedef int32_t sample_t;
 
 class Config {
 public:

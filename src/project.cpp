@@ -1,29 +1,32 @@
 #include <stdio.h>
 #include <sndfile.h>
-#include "project.h"
-#include "config.h"
-#include "log.h"
 using namespace std;
 
-Project::Project(const char *filename) {
-    infile = sf_open(infilename, SFM_READ, &sfinfo);
+#include "audio.h"
+#include "config.h"
+#include "log.h"
+
+#include "project.h"
+
+Project::Project(const char *filename, Audio *audio) : audio(audio) {
+    file = sf_open(filename, SFM_READ, &sfinfo);
     LOG("Sound File Information:");
     LOG("Channels: " << sfinfo.channels);
     LOG("Sample Rate: " << sfinfo.samplerate);
     LOG("Sections: " << sfinfo.sections);
     LOG("Format: " << sfinfo.format);
 
-    if (sfinfo.samplerate != SAMPLE_RATE || sfinfo.channels != CHANNELS) {
+    if (sfinfo.samplerate != audio->sampleRate || sfinfo.channels != audio->channels) {
         LOG("Sound file not valid format! Project ignored.");
         valid = false;
         return;
     }
 
-    bufferSize = PERIOD_SIZE * CHANNELS * sizeof(sample_t);
+    bufferSize = audio->periodSize * audio->channels * sizeof(sample_t);
     if (buffer) {
         free(buffer);
     }
-    buffer = static_cast<sample_t>(malloc(PERIOD_SIZE * CHANNELS * sizeof(sample_t)));
+    buffer = static_cast<sample_t*>(malloc(audio->periodSize * audio->channels * sizeof(sample_t)));
 
     valid = true;
 }
@@ -39,7 +42,7 @@ bool Project::isValid() {
 }
 
 bool Project::updateBuffer() {
-    return (readcount = sf_readf_int(infile, buffer, PERIOD_SIZE)) > 0;
+    return (readcount = sf_readf_int(file, buffer, audio->periodSize)) > 0;
 }
 
 std::string Project::getName() {

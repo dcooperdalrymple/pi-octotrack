@@ -5,12 +5,16 @@
 #include <vector>
 #include <stdint.h>
 #include <sndfile.h>
-#include "config.h"
 using namespace std;
+
+#include "config.h"
+#include "audio.h"
+
+#include "config.h"
 
 class Project {
 public:
-    Project(const char *filename);
+    Project(const char *filename, Audio *audio);
     ~Project();
     bool isValid();
     bool updateBuffer();
@@ -18,10 +22,11 @@ public:
     uint8_t getTrigger();
 
 protected:
-    Sample *buffer;
+    sample_t *buffer;
     size_t bufferSize;
 
 private:
+    Audio *audio;
     SF_INFO sfinfo;
     SNDFILE *file = nullptr;
     uint32_t readcount;

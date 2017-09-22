@@ -2,8 +2,9 @@
 #define INOTEOBSERVER_H
 
 #include <memory>
-#include "note.h"
 using namespace std;
+
+#include "note.h"
 
 class INoteObservable;
 using PNoteObservable = shared_ptr<INoteObservable>;

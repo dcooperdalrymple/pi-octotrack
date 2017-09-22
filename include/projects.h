@@ -4,26 +4,30 @@
 #include <string>
 #include <vector>
 #include <dirent.h>
-#include "project.h"
 using namespace std;
+
+#include "audio.h"
+#include "project.h"
 
 class Projects {
 public:
-    Projects();
+    Projects(const char *directoryName, Audio *audio);
     ~Projects();
     bool searchDirectory();
-    void addProject(string filename);
-    bool removeProject(Project &project);
-    vector<Project> getProjects();
+    bool addProject(string filename);
+    bool removeProject(Project *project);
+    const vector<Project> getProjects() const;
 
 private:
-    void parseFilename(string filename, string &filename_name, string &filename_extension);
+    bool parseFilename(string filename, string &filename_name, string &filename_extension);
     void empty();
 
     const char *directoryName;
     DIR *directory;
-    dirent entry;
+    dirent *entry;
     vector<Project> projects;
+
+    Audio *audio;
 };
 
 #endif

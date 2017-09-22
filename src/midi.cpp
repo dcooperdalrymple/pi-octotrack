@@ -1,17 +1,21 @@
 #include <iostream>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string>
 #include <vector>
-#include "RtMidi.h"
-#include "midi.h"
+#include <functional>
+#include <rtmidi/RtMidi.h>
 using namespace std;
 
-Midi::Midi(uint16_t _midi_in_port, uint16_t _midi_out_port, uint16_t _midi_in_channel, uint16_t _midi_out_channel) :
-    midi_in_port(_midi_in_port),
-    midi_out_port(_midi_out_port),
-    midi_in_channel(_midi_in_channel),
-    midi_out_channel(_midi_out_channel) {
+#include "midi.h"
+#include "log.h"
+
+Midi::Midi(uint16_t in_port, uint16_t out_port, uint16_t in_channel, uint16_t out_channel) :
+    in_port(in_port),
+    out_port(out_port),
+    in_channel(in_channel),
+    out_channel(out_channel) {
     // Initialize RtMidi
     try {
         midiin = new RtMidiIn();
@@ -43,7 +47,7 @@ bool Midi::init() {
         }
         LOG("    Input Port #" << (i + 1) << ": " << portName);
     }
-    if (MIDI_IN_PORT >= nPorts) {
+    if (in_port >= nPorts) {
         LOG("Desired Midi input port not available");
         return false;
     }
@@ -61,7 +65,7 @@ bool Midi::init() {
         }
         LOG("    Output Port #" << (i + 1) << ": " << portName);
     }
-    if (MIDI_OUT_PORT >= nPorts) {
+    if (out_port >= nPorts) {
         LOG("Desired Midi output port not available");
         return false;
     }
@@ -71,11 +75,15 @@ bool Midi::init() {
 }
 
 bool Midi::open() {
-    midiin->openPort(MIDI_IN_PORT);
-    midiin->setCallback(&midiCallback);
+    using namespace std::placeholders;
+
+    midiin->openPort(in_port);
+
+    midiin->setCallback(&midiCallback, this);
+
     midiin->ignoreTypes(false, false, false); // Don't ignore sysex, timing, or active sensing messages
 
-    midiout->openPort(MIDI_OUT_PORT);
+    midiout->openPort(out_port);
 
     return true;
 }
@@ -88,8 +96,10 @@ Notes& Midi::getNotes() {
     return notes;
 }
 
-void midiCallback(double deltatime, vector<uint8_t> *message, void *userData) {
+static void midiCallback(double deltatime, vector<uint8_t> *message, void *userData) {
     if (message->size() <= 0) return;
+
+    Midi *midi = static_cast<Midi*>(userData);
 
     uint8_t bytesLeft = 0;
     uint8_t c = (uint8_t)message->at(0);
@@ -98,24 +108,24 @@ void midiCallback(double deltatime, vector<uint8_t> *message, void *userData) {
 
     if (c < 0x80) {
         // Data received, reuse last status
-        data[0] = c;
-        if (!(status == MidiStatus::ProgramChange) && !(status == MidiStatus::ChannelPressure)) {
-            data[1] = (uint8_t)message->at(1);
+        midi->data[0] = c;
+        if (!(midi->status == MidiStatus::ProgramChange) && !(midi->status == MidiStatus::ChannelPressure)) {
+            midi->data[1] = (uint8_t)message->at(1);
         }
     } else if ((c > 0x7F) && (c < 0xF0)) {
         // Status byte of channel message
-        if ((c & 0x0F) == MIDI_IN_CHANNEL) { // Ignore if not channel
-            status = MidiStatus((c & 0xF0));
-            if ((status == MidiStatus::ProgramChange) || (status == MidiStatus::ChannelPressure)) {
-                data[0] = (uint8_t)message->at(1);
+        if ((c & 0x0F) == midi->in_channel) { // Ignore if not channel
+            midi->status = MidiStatus((c & 0xF0));
+            if ((midi->status == MidiStatus::ProgramChange) || (midi->status == MidiStatus::ChannelPressure)) {
+                midi->data[0] = (uint8_t)message->at(1);
             } else {
-                data[0] = (uint8_t)message->at(1);
-                data[1] = (uint8_t)message->at(2);
+                midi->data[0] = (uint8_t)message->at(1);
+                midi->data[1] = (uint8_t)message->at(2);
             }
         }
     }
 
-    parseMessage();
+    midi->parseMessage();
 }
 
 bool Midi::sendMessage() {
@@ -131,14 +141,14 @@ bool Midi::sendMessage() {
     return true;
 }
 
-void Midi::parseMessage() {
+bool Midi::parseMessage() {
     switch (status) {
         case MidiStatus::NoteOff:
             notes.removeNote(data[0]);
             break;
         case MidiStatus::NoteOn:
             if (data[1] == 0) {
-                notes.removeNote(data[0]) // Disguised NoteOff
+                notes.removeNote(data[0]); // Disguised NoteOff
             } else {
                 notes.addNote(data[0], data[1]);
             }

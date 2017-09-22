@@ -24,11 +24,13 @@
    René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 */
 
+#include <stdint.h>
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "Chameleon.h"
 using namespace std;
+
+#include "chameleon.h"
 
 Chameleon::Chameleon(string const& value) {
     value_ = value;
@@ -38,7 +40,7 @@ Chameleon::Chameleon(const char* c) {
     value_ = c;
 }
 
-Chameleon::Chameleon(double d) {
+Chameleon::Chameleon(int32_t d) {
     stringstream s;
     s << d;
     value_ = s.str();
@@ -53,7 +55,7 @@ Chameleon& Chameleon::operator=(Chameleon const& other) {
     return *this;
 }
 
-Chameleon& Chameleon::operator=(double i) {
+Chameleon& Chameleon::operator=(int32_t i) {
     stringstream s;
     s << i;
     value_ = s.str();
@@ -69,6 +71,10 @@ Chameleon::operator string() const {
     return value_;
 }
 
-Chameleon::operator double() const {
+Chameleon::operator int32_t() const {
     return atof(value_.c_str());
+}
+
+const char* Chameleon::c_str() const {
+    return value_.c_str();
 }

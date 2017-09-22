@@ -1,7 +1,9 @@
 #include <stdint.h>
-#include "debugobserver.h"
-#include "log.h"
 using namespace std;
+
+#include "log.h"
+
+#include "debugobserver.h"
 
 DebugObserver::DebugObserver() {
 

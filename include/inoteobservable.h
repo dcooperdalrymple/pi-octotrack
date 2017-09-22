@@ -3,8 +3,9 @@
 
 #include <vector>
 #include <memory>
-#include "note.h"
 using namespace std;
+
+#include "note.h"
 
 class INoteObserver;
 using PNoteObserver = shared_ptr<INoteObserver>;
