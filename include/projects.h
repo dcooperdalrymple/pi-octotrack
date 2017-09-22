@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <dirent.h>
 #include "project.h"
 using namespace std;
 
@@ -12,8 +13,8 @@ public:
     ~Projects();
     bool searchDirectory();
     void addProject(string filename);
-    bool Projects::removeProject(Project &project);
-    vector<Project> Projects::getProjects();
+    bool removeProject(Project &project);
+    vector<Project> getProjects();
 
 private:
     void parseFilename(string filename, string &filename_name, string &filename_extension);

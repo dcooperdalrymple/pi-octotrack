@@ -18,4 +18,4 @@ public:
 
 using PNoteObserver = shared_ptr<INoteObserver>;
 
-#endif;
+#endif

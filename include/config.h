@@ -26,6 +26,7 @@
 #include <string>
 #include <stdint.h>
 #include <map>
+#include "chameleon.h"
 using namespace std;
 
 typedef int16_t sample_t;
@@ -34,7 +35,7 @@ class Config {
 public:
     Config(string const& configFile);
 
-    CHameleon const& Value(string const& section, string const& entry) const;
+    Chameleon const& Value(string const& section, string const& entry) const;
 
     Chameleon const& Value(string const& section, string const& entry, uint32_t value);
     Chameleon const& Value(string const& section, string const& entry, string const& value);

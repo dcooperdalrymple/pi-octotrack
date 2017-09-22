@@ -1,25 +1,6 @@
-# Update Submodules
-
-#GIT = git
-#GIT_SUBMODULES := $(shell sed -nE 's/path = +(.+)/\1\/.git/ p' .gitmodules | paste -s -)
-
-#.PHONY: all
-#all: $(GIT_SUBMODULES)
-
-#$(GIT_SUBMODULES): %/.git: .gitmodules
-#	$(GIT) submodule init
-#	$(GIT) submodule update $*
-
-# Build Alsa
-
-# Build RtMidi
-
-# Build Project
-
 TARGET_EXEC ?= a.out
 
 BUILD_DIR ?= ./build
-EXTERNALS_DIR ?= ./externals
 INC_DIRS ?= ./include
 SRC_DIRS ?= ./src
 

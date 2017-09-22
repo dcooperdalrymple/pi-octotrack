@@ -5,6 +5,7 @@
 #include <vector>
 #include <stdint.h>
 #include <sndfile.h>
+#include "config.h"
 using namespace std;
 
 class Project {

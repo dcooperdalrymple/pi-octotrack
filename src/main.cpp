@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
-#include "midi.h"
-#include "debugobserver.h"
-#include "player.h"
-#include "projects.h"
 #include "config.h"
+#include "midi.h"
+#include "projects.h"
+#include "audio.h"
+#include "debugobserver.h"
 #include "log.h"
 using namespace std;
 
@@ -22,36 +22,31 @@ int main(int argc, char *argv[]) {
 
     // Setup Midi
     LOG("Initializing Midi");
-    Midi midi(config.Value("midi", MIDI_IN_PORT), config.Value("midi", MIDI_OUT_PORT), config.Value("midi", MIDI_IN_CHANNEL), config.Value("midi", MIDI_OUT_CHANNEL));
-    if (midi->init() == false) {
+    Midi midi(config.Value("midi", "in_port", MIDI_IN_PORT), config.Value("midi", "out_port", MIDI_OUT_PORT), config.Value("midi", "in_channel", MIDI_IN_CHANNEL), config.Value("midi", "out_channel", MIDI_OUT_CHANNEL));
+    if (midi.init() == false) {
         LOG("Midi initialization failure");
         return 0;
     }
 #ifdef DEBUG
     PNoteObserver debugObserver(new DebugObserver);
-    midi->getNotes().registerObserver(debugObserver);
+    midi.getNotes().registerObserver(debugObserver);
     LOG("DebugObserver registered");
 #endif
-    midi->open();
+    midi.open();
 
     // Populate Projects
-    Projects projects(config.Value("projects", PROJECT_DIRECTORY).c_str());
-    if (projects->search_directory() == false) {
+    Projects projects(config.Value("project", "directory", PROJECT_DIRECTORY).c_str());
+    if (projects.search_directory() == false) {
         LOG("Failed to read projecs directory");
         return 0;
     }
 
     // Setup Audio
     LOG("Initializing Audio");
-    Audio audio(config.Value("audio", AUDIO_DEVICE_NAME), config.Value("audio", AUDIO_SAMPLE_RATE), config.Value("audio", AUDIO_CHANNELS), config.Value("audio", AUDIO_PERIOD_SIZE));
-    if (audio->open() == false) {
+    Audio audio(config.Value("audio", "device_name", AUDIO_DEVICE_NAME), config.Value("audio", "sample_rate", AUDIO_SAMPLE_RATE), config.Value("audio", "channels", AUDIO_CHANNELS), config.Value("audio", "period_size", AUDIO_PERIOD_SIZE));
+    if (audio.open() == false) {
         LOG("Audio initialization failure");
         return 0;
-    }
-
-    // Loop forever
-    while (true) {
-        sleep(1);
     }
 
     return 0;
