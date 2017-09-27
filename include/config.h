@@ -28,21 +28,17 @@
 #include <map>
 using namespace std;
 
-#include "chameleon.h"
-
 typedef int32_t sample_t;
 
 class Config {
 public:
     Config(string const& configFile);
-
-    Chameleon const& Value(string const& section, string const& entry) const;
-
-    Chameleon const& Value(string const& section, string const& entry, uint32_t value);
-    Chameleon const& Value(string const& section, string const& entry, string const& value);
+    string const& val(string const& section, string const& entry);
+    string const& val_str(string const& section, string const& entry, string const& value);
+    int32_t const& val_int(string const& section, string const& entry, int32_t const& value);
 
 private:
-    map<string, Chameleon> content;
+    map<string, string> content;
 };
 
 #endif

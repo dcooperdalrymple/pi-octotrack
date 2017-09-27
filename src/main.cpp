@@ -6,7 +6,7 @@ using namespace std;
 #include "midi.h"
 #include "projects.h"
 #include "audio.h"
-#include "debugobserver.h"
+// #include "debugobserver.h"
 #include "log.h"
 
 int main(int argc, char *argv[]) {
@@ -23,28 +23,30 @@ int main(int argc, char *argv[]) {
 
     // Setup Midi
     LOG("Initializing Midi");
-    Midi midi(config.Value("midi", "in_port", MIDI_IN_PORT), config.Value("midi", "out_port", MIDI_OUT_PORT), config.Value("midi", "in_channel", MIDI_IN_CHANNEL), config.Value("midi", "out_channel", MIDI_OUT_CHANNEL));
+    Midi midi(config.val_int("midi", "in_port", MIDI_IN_PORT), config.val_int("midi", "out_port", MIDI_OUT_PORT), config.val_int("midi", "in_channel", MIDI_IN_CHANNEL), config.val_int("midi", "out_channel", MIDI_OUT_CHANNEL));
     if (midi.init() == false) {
         LOG("Midi initialization failure");
         return 0;
     }
+/*
 #ifdef DEBUG
     PNoteObserver debugObserver(new DebugObserver);
     midi.getNotes().registerObserver(debugObserver);
     LOG("DebugObserver registered");
 #endif
+*/
     midi.open();
 
     // Setup Audio
     LOG("Initializing Audio");
-    Audio audio(config.Value("audio", "device_name", AUDIO_DEVICE_NAME), config.Value("audio", "sample_rate", AUDIO_SAMPLE_RATE), config.Value("audio", "channels", AUDIO_CHANNELS), config.Value("audio", "period_size", AUDIO_PERIOD_SIZE));
+    Audio audio(config.val_str("audio", "device_name", AUDIO_DEVICE_NAME), config.val_int("audio", "sample_rate", AUDIO_SAMPLE_RATE), config.val_int("audio", "channels", AUDIO_CHANNELS), config.val_int("audio", "period_size", AUDIO_PERIOD_SIZE));
     if (audio.open() == false) {
         LOG("Audio initialization failure");
         return 0;
     }
 
     // Populate Projects
-    Projects projects(config.Value("project", "directory", PROJECT_DIRECTORY).c_str(), &audio);
+    Projects projects(config.val_str("project", "directory", PROJECT_DIRECTORY).c_str(), &audio);
     if (projects.searchDirectory() == false) {
         LOG("Failed to read projecs directory");
         return 0;

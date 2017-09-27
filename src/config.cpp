@@ -1,6 +1,7 @@
-// http://www.adp-gmbh.ch/cpp/config_file.html
-
 #include <fstream>
+#include <stdint.h>
+#include <string>
+#include <sstream>
 using namespace std;
 
 #include "config.h"
@@ -20,6 +21,21 @@ string trim(string const& source, char const* delims = " \t\r\n") {
     }
 
     return result;
+}
+
+template <typename T>
+string const& to_string(const T& value) {
+    stringstream ss;
+    ss << value;
+    return ss.str();
+}
+
+int32_t stoi(string const& s) {
+    int32_t n;
+    stringstream ss;
+    ss << s;
+    ss >> n;
+    return n;
 }
 
 Config::Config(string const& configFile) {
@@ -46,32 +62,31 @@ Config::Config(string const& configFile) {
         name = trim(line.substr(0, posEqual));
         value = trim(line.substr(posEqual + 1));
 
-        content[inSection + '/' + name] = Chameleon(value);
+        content[inSection + '/' + name] = value;
     }
 }
 
-Chameleon const& Config::Value(string const& section, string const& entry) const {
-    map<string, Chameleon>::const_iterator ci = content.find(section + '/' + entry);
-
+string const& Config::val(string const& section, string const& entry) {
+    map<string, string>::const_iterator ci = content.find(section + '/' + entry);
     if (ci == content.end()) {
         throw "Does not exist";
     }
-
     return ci->second;
 }
 
-Chameleon const& Config::Value(string const& section, string const& entry, double value) {
+string const& Config::val_str(string const& section, string const& entry, string const& value) {
     try {
-        return Value(section, entry);
+        return val(section, entry);
     } catch (const char *) {
-        return content.insert(make_pair(section + '/' + entry, Chameleon(value))).first->second;
+        return content.insert(make_pair(section + '/' + entry, value)).first->second;
     }
 }
 
-Chameleon const* Config::Value(string const& section, string const& entry, string const& value) {
+int32_t const& Config::val_int(string const& section, string const& entry, int32_t const& value) {
     try {
-        return Value(section, entry);
+        return stoi(val(section, entry));
     } catch (const char *) {
-        return content.insert(make_pair(section + '/' + entry, Chameleon(value))).first->second;
+        content.insert(make_pair(section + '/' + entry, to_string(value)));
+        return value;
     }
 }

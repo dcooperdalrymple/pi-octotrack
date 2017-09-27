@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 #include <stdint.h>
-#include <rtmidi/RtMidi.h>
+#include <RtMidi.h>
 using namespace std;
 
 #include "notes.h"
@@ -42,8 +42,8 @@ private:
     void clean();
 
     // Device Classes
-    RtMidiIn *midiin = 0;
-    RtMidiOut *midiout = 0;
+    RtMidiIn *midiin;
+    RtMidiOut *midiout;
 
     // Private Variables
     Notes notes;

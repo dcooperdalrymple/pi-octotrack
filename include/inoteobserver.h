@@ -4,6 +4,7 @@
 #include <memory>
 using namespace std;
 
+#include "inoteobservable.h"
 #include "note.h"
 
 class INoteObservable;

@@ -5,6 +5,7 @@
 #include <memory>
 using namespace std;
 
+#include "inoteobserver.h"
 #include "note.h"
 
 class INoteObserver;

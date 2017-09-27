@@ -1,3 +1,4 @@
+/*
 #include <stdint.h>
 using namespace std;
 
@@ -24,3 +25,5 @@ void DebugObserver::noteRemoved(const Note &note) {
 void DebugObserver::notify(const PNoteObservable &&subject) {
 
 }
+*/
+

@@ -5,11 +5,13 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include <rtmidi/RtMidi.h>
+#include <RtMidi.h>
 using namespace std;
 
-#include "midi.h"
 #include "log.h"
+#include "midistatus.h"
+
+#include "midi.h"
 
 Midi::Midi(uint16_t in_port, uint16_t out_port, uint16_t in_channel, uint16_t out_channel) :
     in_port(in_port),
@@ -75,12 +77,8 @@ bool Midi::init() {
 }
 
 bool Midi::open() {
-    using namespace std::placeholders;
-
     midiin->openPort(in_port);
-
     midiin->setCallback(&midiCallback, this);
-
     midiin->ignoreTypes(false, false, false); // Don't ignore sysex, timing, or active sensing messages
 
     midiout->openPort(out_port);
@@ -109,14 +107,14 @@ static void midiCallback(double deltatime, vector<uint8_t> *message, void *userD
     if (c < 0x80) {
         // Data received, reuse last status
         midi->data[0] = c;
-        if (!(midi->status == MidiStatus::ProgramChange) && !(midi->status == MidiStatus::ChannelPressure)) {
+        if (!(midi->status == ProgramChange) && !(midi->status == ChannelPressure)) {
             midi->data[1] = (uint8_t)message->at(1);
         }
     } else if ((c > 0x7F) && (c < 0xF0)) {
         // Status byte of channel message
         if ((c & 0x0F) == midi->in_channel) { // Ignore if not channel
             midi->status = MidiStatus((c & 0xF0));
-            if ((midi->status == MidiStatus::ProgramChange) || (midi->status == MidiStatus::ChannelPressure)) {
+            if ((midi->status == ProgramChange) || (midi->status == ChannelPressure)) {
                 midi->data[0] = (uint8_t)message->at(1);
             } else {
                 midi->data[0] = (uint8_t)message->at(1);
@@ -143,10 +141,10 @@ bool Midi::sendMessage() {
 
 bool Midi::parseMessage() {
     switch (status) {
-        case MidiStatus::NoteOff:
+        case NoteOff:
             notes.removeNote(data[0]);
             break;
-        case MidiStatus::NoteOn:
+        case NoteOn:
             if (data[1] == 0) {
                 notes.removeNote(data[0]); // Disguised NoteOff
             } else {

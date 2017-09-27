@@ -18,16 +18,16 @@ struct AudioCallbackData {
 
 class Audio {
 public:
-    Audio(string deviceName, uint32_t sampleRate, uint8_t channels, uint16_t periodSize);
+    Audio(string deviceName, uint32_t sampleRate, uint32_t channels, uint64_t periodSize);
     ~Audio();
     bool open();
     bool close();
 
     string deviceName;
     uint32_t sampleRate;
-    uint8_t channels;
-    uint16_t periodSize;
-    uint16_t bufferSize;
+    uint32_t channels;
+    snd_pcm_uframes_t periodSize;
+    snd_pcm_uframes_t bufferSize;
 
 protected:
     void AlsaCallback(snd_async_handler_t *pcmCallback);

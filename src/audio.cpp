@@ -4,10 +4,10 @@ using namespace std;
 #include "audio.h"
 #include "log.h"
 
-Audio::Audio(string deviceName, uint32_t sampleRate, uint8_t channels, uint16_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
+Audio::Audio(string deviceName, uint32_t sampleRate, uint32_t channels, uint64_t periodSize) : deviceName(deviceName), sampleRate(sampleRate), channels(channels), periodSize(periodSize) {
     bufferSize = periodSize * sizeof(sample_t);
-    handle = nullptr;
-    pcmCallback = nullptr;
+    handle = NULL;
+    pcmCallback = NULL;
 }
 
 Audio::~Audio() {
@@ -25,7 +25,7 @@ bool Audio::open() {
     LOG("snd_pcm_open: " << snd_strerror(error));
 
     // Prepare setting hardware parameters
-    snd_pcm_hw_params_t *hwParams = nullptr;
+    snd_pcm_hw_params_t *hwParams = NULL;
     snd_pcm_hw_params_malloc(&hwParams);
     snd_pcm_hw_params_any(handle, hwParams);
 
@@ -44,7 +44,7 @@ bool Audio::open() {
     LOG("snd_pcm_hw_params_set_rate_near: " << snd_strerror(error) << " actual: " << sampleRate);
 
     // Channels
-    error = snd_pcm_hw_params_set_channels(handle, hwParams, &channels);
+    error = snd_pcm_hw_params_set_channels(handle, hwParams, channels);
     LOG("snd_pcm_hw_params_set_channels: " << snd_strerror(error) << " actual: " << channels);
 
     // Buffer Size
@@ -52,7 +52,7 @@ bool Audio::open() {
     LOG("snd_pcm_hw_params_set_buffer_size_near: " << snd_strerror(error) << " actual: " << bufferSize);
 
     // Period Size
-    error = snd_pcm_hw_params_set_period_size_near(handle, hwParams, &periodSize, nullptr);
+    error = snd_pcm_hw_params_set_period_size_near(handle, hwParams, &periodSize, NULL);
     LOG("snd_pcm_hw_params_set_period_size_near: " << snd_strerror(error) << " actual: " << periodSize);
 
     // Apply hardware parameters
@@ -107,12 +107,12 @@ bool Audio::open() {
     }
 
     // Setup callback data struct
-    callbackData = (CallbackData *)malloc(sizeof(AudioCallbackData));
+    callbackData = (AudioCallbackData *)malloc(sizeof(AudioCallbackData));
     callbackData->buffer = buffer;
     callbackData->periodSize = periodSize;
 
     // Set asynchronous handler
-    pcmCallback = nullptr;
+    pcmCallback = NULL;
     error = snd_async_add_pcm_handler(&pcmCallback, handle, AlsaCallback, callbackData);
     LOG("snd_async_add_pcm_handler: " << snd_strerror(error));
 
@@ -130,7 +130,7 @@ bool Audio::close() {
 
     // Close device
     snd_pcm_close(handle);
-    handle = nullptr;
+    handle = NULL;
 
     return true;
 }

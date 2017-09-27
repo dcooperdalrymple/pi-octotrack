@@ -28,7 +28,7 @@ protected:
 private:
     Audio *audio;
     SF_INFO sfinfo;
-    SNDFILE *file = nullptr;
+    SNDFILE *file;
     uint32_t readcount;
 
     bool valid;
