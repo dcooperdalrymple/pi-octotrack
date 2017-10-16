@@ -57,11 +57,3 @@ void Notes::removeNote(uint8_t pitch) {
 const std::vector<Note> Notes::getNotes() const {
     return notes;
 }
-
-void Notes::registerObserver(PNoteObserver &observer) {
-    observers.push_back(observer);
-}
-
-void Notes::removeObserver(PNoteObserver &observer) {
-    observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
-}

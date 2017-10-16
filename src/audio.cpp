@@ -135,7 +135,7 @@ bool Audio::close() {
     return true;
 }
 
-void Audio::AlsaCallback(snd_async_handler_t *pcmCallbackHandler) {
+static void AlsaCallback(snd_async_handler_t *pcmCallbackHandler) {
     snd_pcm_t *pcmHandle = snd_async_handler_get_pcm(pcmCallbackHandler);
     snd_pcm_uframes_t available;
 

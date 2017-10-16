@@ -30,7 +30,7 @@ public:
     snd_pcm_uframes_t bufferSize;
 
 protected:
-    void AlsaCallback(snd_async_handler_t *pcmCallback);
+    static void AlsaCallback(snd_async_handler_t *pcmCallback);
     sample_t *buffer;
     snd_async_handler_t *pcmCallback;
 

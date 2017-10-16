@@ -23,21 +23,6 @@ string trim(string const& source, char const* delims = " \t\r\n") {
     return result;
 }
 
-template <typename T>
-string const& to_string(const T& value) {
-    stringstream ss;
-    ss << value;
-    return ss.str();
-}
-
-int32_t stoi(string const& s) {
-    int32_t n;
-    stringstream ss;
-    ss << s;
-    ss >> n;
-    return n;
-}
-
 Config::Config(string const& configFile) {
     ifstream file(configFile.c_str());
 
@@ -66,7 +51,7 @@ Config::Config(string const& configFile) {
     }
 }
 
-string const& Config::val(string const& section, string const& entry) {
+string Config::val(string const& section, string const& entry) {
     map<string, string>::const_iterator ci = content.find(section + '/' + entry);
     if (ci == content.end()) {
         throw "Does not exist";
@@ -74,7 +59,7 @@ string const& Config::val(string const& section, string const& entry) {
     return ci->second;
 }
 
-string const& Config::val_str(string const& section, string const& entry, string const& value) {
+string Config::val_str(string const& section, string const& entry, string const& value) {
     try {
         return val(section, entry);
     } catch (const char *) {
@@ -82,11 +67,17 @@ string const& Config::val_str(string const& section, string const& entry, string
     }
 }
 
-int32_t const& Config::val_int(string const& section, string const& entry, int32_t const& value) {
+int32_t Config::val_int(string const& section, string const& entry, int32_t const& value) {
     try {
-        return stoi(val(section, entry));
+        int32_t n;
+        stringstream ss;
+        ss << val(section, entry);
+        ss >> n;
+        return n;
     } catch (const char *) {
-        content.insert(make_pair(section + '/' + entry, to_string(value)));
+        stringstream ss;
+        ss << value;
+        content.insert(make_pair(section + '/' + entry, ss.str()));
         return value;
     }
 }

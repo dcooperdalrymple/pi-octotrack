@@ -33,9 +33,9 @@ typedef int32_t sample_t;
 class Config {
 public:
     Config(string const& configFile);
-    string const& val(string const& section, string const& entry);
-    string const& val_str(string const& section, string const& entry, string const& value);
-    int32_t const& val_int(string const& section, string const& entry, int32_t const& value);
+    string val(string const& section, string const& entry);
+    string val_str(string const& section, string const& entry, string const& value);
+    int32_t val_int(string const& section, string const& entry, int32_t const& value);
 
 private:
     map<string, string> content;
